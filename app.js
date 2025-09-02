@@ -2,17 +2,17 @@ const express = require("express");
 const app = express();
 const PORT = 3000;
 
-app.get("/", (req, res) => res.send("Hello Express")); //home
+app.get("/", (req, res) => {
+  res.send("Hello Express ");
+});
 
 app.get("/users", (req, res) => {
   const users = [
     {
       name1: "omid",
       age: 34,
-      name2: "ahmad",
-      age: 25,
-      name3: "farhad",
-      age: 44,
+      name2: "Maria",
+      age: 33,
     },
   ];
   res.send(users);
