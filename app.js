@@ -6,6 +6,7 @@ app.get("/", (req, res) => {
   res.send("Hello Express ");
 });
 
+//Controllers که بعدا این قسمت رو بایستی جدا کنیم 
 app.get("/users", (req, res) => {
   const users = [
     {
