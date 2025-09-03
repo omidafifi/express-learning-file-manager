@@ -110,7 +110,7 @@
     "yn": "^3.1.1"
   },
   "scripts": {
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
   },
   "repository": {
     "type": "git",
