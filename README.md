@@ -26,7 +26,7 @@ This project was developed as a bootcamp task to practice **file CRUD operations
 ## 📂 Project Structure
 
 Install dependencies:npm install
-Run the project :npm run dev
+Run the project:npm run dev
 
 
    
