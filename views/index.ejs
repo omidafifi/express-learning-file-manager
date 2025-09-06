@@ -10,9 +10,14 @@
   <div class="container">
     <h1>مدیریت فایل</h1>
 
-    <% if (message) { %><div class="alert success"><%= message %></div><% } %>
-    <% if (error) { %><div class="alert error"><%= error %></div><% } %>
+    <% if (message) { %>
+      <div class="alert success"><%= message %></div>
+    <% } %>
+    <% if (error) { %>
+      <div class="alert error"><%= error %></div>
+    <% } %>
 
+    <!-- مسیر پوشه فعلی -->
     <nav class="breadcrumbs">
       <% crumbs.forEach((c, i) => { %>
         <a href="<%= c.href %>"><%= c.name %></a>
@@ -20,14 +25,25 @@
       <% }) %>
     </nav>
 
+    <!-- لیست فایل‌ها و فولدرها -->
     <section class="list">
       <h2>پوشه: <code><%= dirRel || "/" %></code></h2>
       <table>
-        <thead><tr><th>نام</th><th>نوع</th><th>حجم</th><th>اقدام</th></tr></thead>
+        <thead>
+          <tr>
+            <th>نام</th>
+            <th>نوع</th>
+            <th>حجم</th>
+            <th>اقدام</th>
+          </tr>
+        </thead>
         <tbody>
-          <% if (!list.length) { %><tr><td colspan="4">خالی</td></tr><% } %>
+          <% if (!list.length) { %>
+            <tr><td colspan="4">هیچ فایلی وجود ندارد</td></tr>
+          <% } %>
           <% list.forEach(item => { %>
             <tr>
+              <!-- نام فایل یا فولدر -->
               <td>
                 <% if (item.type === "folder") { %>
                   <a href="/?dir=<%= encodeURIComponent(item.rel) %>"><%= item.name %></a>
@@ -35,8 +51,14 @@
                   <%= item.name %>
                 <% } %>
               </td>
+
+              <!-- نوع -->
               <td><%= item.type %></td>
+
+              <!-- حجم -->
               <td><%= item.size === null ? "-" : item.size %></td>
+
+              <!-- دکمه حذف فقط برای فایل‌ها -->
               <td>
                 <% if (item.type === "file") { %>
                   <form method="POST" action="/files/delete" style="display:inline">
@@ -51,7 +73,9 @@
       </table>
     </section>
 
+    <!-- فرم‌های امکانات پروژه -->
     <section class="forms">
+      <!-- ایجاد فایل -->
       <div class="card">
         <h3>ایجاد فایل جدید</h3>
         <form method="POST" action="/files/create">
@@ -63,6 +87,7 @@
         </form>
       </div>
 
+      <!-- ایجاد فولدر -->
       <div class="card">
         <h3>ایجاد فولدر</h3>
         <form method="POST" action="/folders/create">
@@ -72,6 +97,7 @@
         </form>
       </div>
 
+      <!-- آپلود با نام دلخواه -->
       <div class="card">
         <h3>آپلود با اسم دلخواه</h3>
         <form method="POST" action="/upload" enctype="multipart/form-data">
@@ -85,6 +111,7 @@
         </form>
       </div>
 
+      <!-- کپی فایل -->
       <div class="card">
         <h3>کپی فایل</h3>
         <form method="POST" action="/files/copy">
@@ -96,6 +123,7 @@
         </form>
       </div>
 
+      <!-- انتقال فایل -->
       <div class="card">
         <h3>انتقال فایل</h3>
         <form method="POST" action="/files/move">
