@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>مدیر فایل</title>
+  <link rel="stylesheet" href="/style.css"/>
+</head>
+<body>
+  <div class="container">
+    <h1>مدیریت فایل</h1>
+
+    <% if (message) { %><div class="alert success"><%= message %></div><% } %>
+    <% if (error) { %><div class="alert error"><%= error %></div><% } %>
+
+    <nav class="breadcrumbs">
+      <% crumbs.forEach((c, i) => { %>
+        <a href="<%= c.href %>"><%= c.name %></a>
+        <% if (i < crumbs.length - 1) { %><span>/</span><% } %>
+      <% }) %>
+    </nav>
+
+    <section class="list">
+      <h2>پوشه: <code><%= dirRel || "/" %></code></h2>
+      <table>
+        <thead><tr><th>نام</th><th>نوع</th><th>حجم</th><th>اقدام</th></tr></thead>
+        <tbody>
+          <% if (!list.length) { %><tr><td colspan="4">خالی</td></tr><% } %>
+          <% list.forEach(item => { %>
+            <tr>
+              <td>
+                <% if (item.type === "folder") { %>
+                  <a href="/?dir=<%= encodeURIComponent(item.rel) %>"><%= item.name %></a>
+                <% } else { %>
+                  <%= item.name %>
+                <% } %>
+              </td>
+              <td><%= item.type %></td>
+              <td><%= item.size === null ? "-" : item.size %></td>
+              <td>
+                <% if (item.type === "file") { %>
+                  <form method="POST" action="/files/delete" style="display:inline">
+                    <input type="hidden" name="relativePath" value="<%= item.rel %>"/>
+                    <button type="submit" class="danger">حذف</button>
+                  </form>
+                <% } %>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="forms">
+      <div class="card">
+        <h3>ایجاد فایل جدید</h3>
+        <form method="POST" action="/files/create">
+          <label>مسیر نسبی فایل (مثل notes/todo.txt)</label>
+          <input name="relativePath" required />
+          <label>محتوا</label>
+          <textarea name="content" rows="4"></textarea>
+          <button type="submit">ایجاد فایل</button>
+        </form>
+      </div>
+
+      <div class="card">
+        <h3>ایجاد فولدر</h3>
+        <form method="POST" action="/folders/create">
+          <label>مسیر نسبی فولدر (مثل notes)</label>
+          <input name="relativePath" required />
+          <button type="submit">ایجاد فولدر</button>
+        </form>
+      </div>
+
+      <div class="card">
+        <h3>آپلود با اسم دلخواه</h3>
+        <form method="POST" action="/upload" enctype="multipart/form-data">
+          <label>پوشه مقصد (اختیاری)</label>
+          <input name="dir" placeholder="مثلاً videos" />
+          <label>نام دلخواه (بدون پسوند هم مجاز است)</label>
+          <input name="customName" />
+          <label>فایل</label>
+          <input type="file" name="file" required />
+          <button type="submit">آپلود</button>
+        </form>
+      </div>
+
+      <div class="card">
+        <h3>کپی فایل</h3>
+        <form method="POST" action="/files/copy">
+          <label>source (مثلاً notes/todo.txt)</label>
+          <input name="source" required />
+          <label>target (مثلاً backup/todo.txt)</label>
+          <input name="target" required />
+          <button type="submit">کپی</button>
+        </form>
+      </div>
+
+      <div class="card">
+        <h3>انتقال فایل</h3>
+        <form method="POST" action="/files/move">
+          <label>source</label>
+          <input name="source" required />
+          <label>target</label>
+          <input name="target" required />
+          <button type="submit">انتقال</button>
+        </form>
+      </div>
+    </section>
+  </div>
+</body>
+</html>
