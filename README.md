@@ -29,6 +29,7 @@ Install dependencies:npm install
 Run the project :npm run dev
 
 
+   
 ## 🌐 Connect on LinkedIn
 برای دیدن دمو و توضیحات کامل این پروژه در لینکدین:  
-[مشاهده پست در لینکدین](https://www.linkedin.com/posts/omidafifi_...)
+[مشاهده پست در لینکدین](https://www.linkedin.com/posts/omidafifi)
